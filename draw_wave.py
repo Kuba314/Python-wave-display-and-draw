@@ -2,22 +2,22 @@ import wave, struct, math
 import pygame
 from pygame.locals import *
 import sys
+import time
 
 ## draws a pixel bcuz pygame can't apparently do that
-def pixel(pos, color = (255, 255, 255)):
+def pixel(surf, pos, color = (255, 255, 255)):
     pygame.draw.line(surf, color, pos, pos)
 
 ## clears whole column at specific x
 def clear_vert(x):
     for y in range(HEIGHT):
-        pixel((x, y), (0, 0, 0))
+        pixel(surf, (x, y), (0, 0, 0))
 
-## draws signal array(default is sine wave)
 def setup():
+    ## draws signal array(default is sine wave)
     for i in range(len(signal)):
-        pixel((i, signal[i]))
-
-
+        pixel(surf, (i, signal[i]))
+    
 ## saves wave into file
 def save():
     print 'Saving...'
@@ -73,8 +73,12 @@ pos = (-1, -1)
 
 ## set up pygame stuff
 pygame.init()
-surf = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
+pygame.mixer.init()
+surf = pygame.display.set_mode((WIDTH, HEIGHT), 0, 8)
 pygame.display.set_caption('Draw me!')
+
+sound = pygame.mixer.Sound('sound.wav')
+sound.set_volume(0.04)
 
 ## print intro signal is sine wave
 ## signal = [int(-math.sin(float(i)/WIDTH*3.1415965*2)*HEIGHT/4+HEIGHT/2) for i in range(WIDTH)]
@@ -83,6 +87,12 @@ setup()
 
 while True:
 
+    ## handle SPACE press - play sound
+    if pygame.key.get_pressed()[K_SPACE]:
+        sound = pygame.mixer.Sound('sound.wav')
+        sound.set_volume(0.02)
+        sound.play()
+    
     ## handle left click - drawing by clicking and making lines, new
     if pygame.mouse.get_pressed()[0]:
         if pos == (-1, -1):
