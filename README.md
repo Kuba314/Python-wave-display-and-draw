@@ -8,7 +8,13 @@ Made in 4 hours, because I'm begginer.
 ## draw_wave.py
 Dependencies: pygame, wave, struct, sys
 Description: Let's you draw a wave. Then repeats it and puts it into a wave file.
+* leftclick:    draw
+* rightclick:   save to file
+* middleclick:  exit
+* space:        play the sound
 
 ## read_wave.py
 Dependencies: pygame, scipy, struct, sys
 Description: Displays just a tiny part at the start of a wave file. With this you can check out how the file you drew really looks.
+* rightclick:   reload
+* middleclick:  exit
